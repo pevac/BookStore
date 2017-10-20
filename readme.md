@@ -1,10 +1,15 @@
 # Install
 
 1) Install MongoDB (https://docs.mongodb.com/manual/administration/install-community/)
+
 2) Install server & client dependencies ```npm i && cd client && npm i && cd ../```
+
 3) Install node-mongo-seeds ```npm i -g node-mongo-seeds```
+
 4) Seed database ```seed```
+
 5) Run dev server ```npm start```
+
 
 # Project
 
@@ -14,7 +19,9 @@ Front-end is located in ```client``` directory (note that client dependencies ar
 # Task
 
 Your goal is to develop book collections web app.
+
 Collection and books are represented as json objects:
+
 ```
 // Collection
 {
@@ -33,17 +40,30 @@ Collection and books are represented as json objects:
 ```
 
 Required features:
+
 * Display list of collections
+
 * Display single collection with included books
+
 * Edit collection data
+
 * Add/Remove Book from collection
+
 * Rate book
+
+* Create book and collection forms (as popups)
+
 * Using Redux for state management
+
 * Using Redux-Saga or Redux-Observable for managing side effects
 
+
 Nice-to-haves:
-* Create book form
-* Create collection form
+
+* styled-components
+
+* react-router v4
+
 
 Visual part is not so important and totally up to you.
 You can use any CSS Framework or React Components lib
