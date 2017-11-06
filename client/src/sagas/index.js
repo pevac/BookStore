@@ -3,7 +3,7 @@ import  Api from '../api';
 import * as types from '../constants';
 import * as actions from '../actions'
 
-let { getAllCollections, deleteCollection, saveCollection, getAllBooks } = actions;
+let { getAllCollections, deleteCollection, saveCollection, getAllBooks, deleteBookFromCollection, addBookToCollection } = actions;
 
 export function* loadCollections() {
     try {
@@ -41,6 +41,24 @@ export function* loadBooks() {
     }
 }
 
+export function* deleteSagaBookFromCollection(collectionId, bookId) {
+    try {
+        yield call(Api.deleteRecord, `${Api.colletionsUrl}/${collectionId}/${Api.booksUrl}`, bookId);
+        yield put(deleteBookFromCollection.success(collectionId, bookId));
+    } catch(error) {
+        yield put(deleteBookFromCollection.failure(error));
+    }
+}
+
+export function* addBookToSagaCollection(collectionId, bookId) {
+    try {
+        let record = yield call(Api.saveRecord, `${Api.colletionsUrl}/${collectionId}/${Api.booksUrl}`, { bookId });
+        yield put(addBookToCollection.success(record));
+    } catch(error) {
+        yield put(addBookToCollection.failure(error));
+    }
+}
+
 export function* watchForLoadCollections() {
     while(true) {
         yield take(types.GET_COLLECTIONS_REQUEST);
@@ -69,11 +87,26 @@ export function* watchForLoadBooks() {
     }
 }
 
+export function* watchForDeleteBookFromCollection() {
+    while(true) {
+        const { collectionId, bookId } = yield take(types.DELETE_BOOK_FROM_COLLECTION_REQUEST);
+        yield fork(deleteSagaBookFromCollection, collectionId, bookId);
+    }
+}
+export function* watchForAddBookToCollection() {
+    while(true) {
+        const { collectionId, bookId } = yield take(types.ADD_BOOK_TO_COLLECTION_REQUEST);
+        yield fork(addBookToSagaCollection, collectionId, bookId);
+    }
+}
+
 export default function* root() {
     yield all([
         fork(watchForLoadCollections),
         fork(watchForDeleteCollection),
         fork(watchForSaveCollection),
         fork(watchForLoadBooks),
+        fork(watchForDeleteBookFromCollection),
+        fork(watchForAddBookToCollection),
       ])
 }

@@ -1,7 +1,7 @@
 export default  class Api {
     static rootUrl = `http://localhost:3001/api`;
-    static colletionsUrl = `/collections`;
-    static booksUrl = `/books`;
+    static colletionsUrl = `collections`;
+    static booksUrl = `books`;
 
     static combineUrl(url, id){
         return id ? `${Api.rootUrl}/${url}/${id}` :  `${Api.rootUrl}/${url}`

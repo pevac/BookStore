@@ -5,6 +5,6 @@ import  BookCollectionsList  from './components/BookCollectionsList';
 import  BookCollection  from './components/BookCollection';
 
 export const routes = <App>
-    <Route  path='/collections' component={ BookCollectionsList }/>
-    <Route  path='/collection/view' component={ BookCollection }/>
+    <Route exact  path='/collections' component={ BookCollectionsList }/>
+    <Route exact  path='/collection/view/' component={ BookCollection }/>
 </App>;

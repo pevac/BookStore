@@ -21,6 +21,17 @@ export const saveCollection = {
   success: (collection) => action(types.SAVE_COLLECTIONS_SUCCESS, { collection }),
   failure: (error) => action(types.SAVE_COLLECTIONS_FAILURE, { error }),
 }
+export const deleteBookFromCollection = {
+  request: (collectionId, bookId) => action(types.DELETE_BOOK_FROM_COLLECTION_REQUEST, { collectionId, bookId }),
+  success: (collectionId, bookId) => action(types.DELETE_BOOK_FROM_COLLECTION_SUCCESS, { collectionId, bookId }),
+  failure: (error) => action(types.DELETE_BOOK_FROM_COLLECTION_FAILURE, { error }),
+}
+
+export const addBookToCollection = {
+  request: (collectionId, bookId) => action(types.ADD_BOOK_TO_COLLECTION_REQUEST, { collectionId, bookId }),
+  success: (collectionId, bookId) => action(types.ADD_BOOK_TO_COLLECTION_SUCCESS, { collectionId, bookId }),
+  failure: (error) => action(types.ADD_BOOK_TO_COLLECTION_FAILURE, { error }),
+}
 
 export const openCollectionForm = (selectedCollection) => action(types.OPEN_COLLECTION_FORM, { selectedCollection });
 export const closeCollectionForm = () => action(types.CLOSE_COLLECTION_FORM)
@@ -31,5 +42,7 @@ export const getAllBooks = {
   success: (books) => action(types.GET_BOOKS_SUCCESS, { books }),
   failure: (error) => action(types.GET_BOOKS_FAILURE, { error }),
 }
+
+
 
 

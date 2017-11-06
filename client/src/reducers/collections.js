@@ -2,6 +2,7 @@ import * as types from '../constants';
 
 const initialState = {
   collections: [],
+  isFetching: false,
   isOpenCollectionForm: false,
   selectedCollection: {
     name: "",
@@ -43,10 +44,6 @@ export default function collectionsReducer(state = initialState, action) {
     case types.SAVE_COLLECTIONS_REQUEST:
     case types.DELETE_COLLECTIONS_REQUEST:
         return {...state, isFetching: true};
-    case types.GET_COLLECTIONS_FAILURE:
-    case types.DELETE_COLLECTIONS_FAILURE:
-    case types.SAVE_COLLECTIONS_FAILURE:
-        return state;
     default: 
         return state;
   }

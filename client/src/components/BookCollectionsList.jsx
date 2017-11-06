@@ -36,9 +36,9 @@ class BookCollectionsList extends Component {
         const list = this.props.collections.map((item, index) => {
             return <li key={item._id} className='list-group-item list-group-item-action'>
                     <span>{item.name}</span>
-                    <a  className='btn btn-primary' onClick={() => {this.props.deleteCollection(item._id)}}>DELETE</a>
-                    <a  className='btn btn-primary' onClick={() => {this.props.openCollectionForm(item, true)}}>EDIT</a>
-                    <Link className='btn btn-primary' to={ '/collection/view' } onClick={() => {this.props.selectCollection(item)}}>Detail</Link>
+                    <a  className='btn btn-primary btn-custom' onClick={() => {this.props.deleteCollection(item._id)}}>DELETE</a>
+                    <a  className='btn btn-primary btn-custom' onClick={() => {this.props.openCollectionForm(item, true)}}>EDIT</a>
+                    <Link className='btn btn-primary btn-custom' to={ '/collection/view' } onClick={() => {this.props.selectCollection(item)}}>Detail</Link>
                 </li>
         })
         return <div>
