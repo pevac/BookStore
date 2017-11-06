@@ -10,7 +10,7 @@ export default class App extends Component {
                     <NavMenu />
                 </div>
                 <div className='col-sm-9'>
-                  {this.children}
+                  {this.props.children}
                 </div>
             </div>
         </div>;

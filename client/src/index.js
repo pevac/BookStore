@@ -8,7 +8,6 @@ import 'bootstrap/dist/css/bootstrap.css';
 import './index.css';
 import registerServiceWorker from './registerServiceWorker';
 import  { routes } from './routes';
-
 import configureStore from './store';
 
 
