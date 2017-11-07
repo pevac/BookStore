@@ -22,14 +22,14 @@ export const saveCollection = {
   failure: (error) => action(types.SAVE_COLLECTIONS_FAILURE, { error }),
 }
 export const deleteBookFromCollection = {
-  request: (collectionId, bookId) => action(types.DELETE_BOOK_FROM_COLLECTION_REQUEST, { collectionId, bookId }),
-  success: (collectionId, bookId) => action(types.DELETE_BOOK_FROM_COLLECTION_SUCCESS, { collectionId, bookId }),
+  request: (collection, book) => action(types.DELETE_BOOK_FROM_COLLECTION_REQUEST, { collection, book }),
+  success: (collection, book) => action(types.DELETE_BOOK_FROM_COLLECTION_SUCCESS, { collection, book }),
   failure: (error) => action(types.DELETE_BOOK_FROM_COLLECTION_FAILURE, { error }),
 }
 
 export const addBookToCollection = {
   request: (collectionId, bookId) => action(types.ADD_BOOK_TO_COLLECTION_REQUEST, { collectionId, bookId }),
-  success: (collectionId, bookId) => action(types.ADD_BOOK_TO_COLLECTION_SUCCESS, { collectionId, bookId }),
+  success: (collection) => action(types.ADD_BOOK_TO_COLLECTION_SUCCESS, { collection }),
   failure: (error) => action(types.ADD_BOOK_TO_COLLECTION_FAILURE, { error }),
 }
 

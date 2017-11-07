@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
 import { Link } from 'react-router-dom';
+import ListGroup  from 'react-bootstrap/lib/ListGroup';
+import ListGroupItem  from 'react-bootstrap/lib/ListGroupItem';
 import * as actions from '../actions';
 import CollectionForm from './CollectionForm';
 
@@ -15,6 +17,7 @@ class BookCollectionsList extends Component {
         selectedCollection: PropTypes.shape({
             description: PropTypes.string.isRequired,
             name: PropTypes.string.isRequired,
+            books: PropTypes.array,
             _id: PropTypes.string
         })
     }
@@ -24,7 +27,8 @@ class BookCollectionsList extends Component {
         isOpenCollectionForm: false,
         selectedCollection: {
             name: "",
-            description: ""
+            description: "",
+            books: []
         }
     }
 
@@ -34,16 +38,16 @@ class BookCollectionsList extends Component {
 
     render() {
         const list = this.props.collections.map((item, index) => {
-            return <li key={item._id} className='list-group-item list-group-item-action'>
+            return <ListGroupItem key={item._id} className='list-group-item-action'>
                     <span>{item.name}</span>
                     <a  className='btn btn-primary btn-custom' onClick={() => {this.props.deleteCollection(item._id)}}>DELETE</a>
                     <a  className='btn btn-primary btn-custom' onClick={() => {this.props.openCollectionForm(item, true)}}>EDIT</a>
-                    <Link className='btn btn-primary btn-custom' to={ '/collection/view' } onClick={() => {this.props.selectCollection(item)}}>Detail</Link>
-                </li>
+                    <Link collection = {item} className='btn btn-primary btn-custom' to={ '/collections/books/' } onClick={() => {this.props.selectCollection(item)}}>Detail</Link>
+                </ListGroupItem>
         })
         return <div>
             <button type="button" className="btn  board-add-card" onClick={() => this.props.openCollectionForm({name: '', description: ''}, true)}>New</button>
-            <ul className='list-group'>{list}</ul>
+            <ListGroup>{list}</ListGroup>
             <CollectionForm 
                 selectedCollection = {this.props.selectedCollection}
                 isOpen={this.props.isOpenCollectionForm}

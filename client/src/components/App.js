@@ -1,19 +1,22 @@
 import React, { Component } from 'react';
+import Grid  from 'react-bootstrap/lib/Grid';
+import Row  from 'react-bootstrap/lib/Row';
+import Col  from 'react-bootstrap/lib/Col';
 import '../css/App.css';
-import { NavMenu } from '../components/NavMenu';
+import { NavMenu } from './navmenu/NavMenu';
 
 export default class App extends Component {
     render() {
-        return <div className='container-fluid'>
-            <div className='row'>
-                <div className='col-sm-3'>
-                    <NavMenu />
-                </div>
-                <div className='col-sm-9'>
-                  {this.props.children}
-                </div>
-            </div>
-        </div>;
+        return <Grid fluid>
+                    <Row>
+                        <Col  sm={3}>
+                            <NavMenu />
+                        </Col>
+                        <Col  sm={9}>
+                            {this.props.children}
+                        </Col>
+                    </Row>
+                </Grid>
     }
 }
 

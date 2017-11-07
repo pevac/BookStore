@@ -3,9 +3,9 @@
 }
 
 /* Highlighting rules for nav menu items */
-.main-nav li a.active,
-.main-nav li a.active:hover,
-.main-nav li a.active:focus {
+.main-nav .nav.navbar-nav li.active a,
+.main-nav .nav.navbar-nav li.active:hover a,
+.main-nav .nav.navbar-nav li.active:focus a {
     background-color: #4189C7;
     color: white;
 }
@@ -17,6 +17,16 @@
     left: 0;
     right: 0;
     z-index: 1;
+}
+
+.main-nav .container-fluid{
+    margin: 0;
+    padding:0;
+}
+
+.main-nav .container-fluid .navbar-brand{
+    margin: 0;
+    padding: 15px 22px;
 }
 
 @media (max-width: 767px) {

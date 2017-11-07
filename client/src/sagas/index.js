@@ -41,10 +41,10 @@ export function* loadBooks() {
     }
 }
 
-export function* deleteSagaBookFromCollection(collectionId, bookId) {
+export function* deleteSagaBookFromCollection(collection, book) {
     try {
-        yield call(Api.deleteRecord, `${Api.colletionsUrl}/${collectionId}/${Api.booksUrl}`, bookId);
-        yield put(deleteBookFromCollection.success(collectionId, bookId));
+        yield call(Api.deleteRecord, `${Api.colletionsUrl}/${collection._id}/${Api.booksUrl}`, book._id);
+        yield put(deleteBookFromCollection.success(collection, book));
     } catch(error) {
         yield put(deleteBookFromCollection.failure(error));
     }
@@ -89,8 +89,8 @@ export function* watchForLoadBooks() {
 
 export function* watchForDeleteBookFromCollection() {
     while(true) {
-        const { collectionId, bookId } = yield take(types.DELETE_BOOK_FROM_COLLECTION_REQUEST);
-        yield fork(deleteSagaBookFromCollection, collectionId, bookId);
+        const { collection, book } = yield take(types.DELETE_BOOK_FROM_COLLECTION_REQUEST);
+        yield fork(deleteSagaBookFromCollection, collection, book);
     }
 }
 export function* watchForAddBookToCollection() {

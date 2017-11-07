@@ -37,6 +37,14 @@ class BookCollection extends Component {
         this.props.getAllBooks();
     }
 
+    componentWillReceiveProps(nextProps) {
+        this.setState({ addBookId: ""})
+    }
+
+    componentWillUnmount(){
+        localStorage.removeItem('collection')
+    }
+
     handleChange(event) {
         this.setState({
             addBookId: event.target.value
@@ -69,7 +77,7 @@ class BookCollection extends Component {
                     <p>Price: {item.price}</p>
                     <p>Rating: { item.rating }</p>
                     <a  className='btn btn-primary btn-custom' 
-                        onClick={()=>{this.props.deleteBooksFromCollection(this.props.collection._id, item._id)}}>
+                        onClick={()=>{this.props.deleteBooksFromCollection(this.props.collection, item)}}>
                         DELETE
                     </a>
                 </li>
@@ -84,7 +92,7 @@ class BookCollection extends Component {
                 <option >{'none'}</option>
                 {options}
             </select>
-            <a disabled={this.state.addBookId && this.state.addBookId !='none'  ? false : true}  
+            <a disabled={!(this.state.addBookId && this.state.addBookId !='none')}  
                 className='btn btn-primary btn-custom' 
                 onClick={()=>{this.props.addBookToCollection(this.props.collection._id, this.state.addBookId)}}>
                 ADD BOOK
@@ -95,10 +103,16 @@ class BookCollection extends Component {
     }
 }
 
+const saveToStorage = (value) => {
+    if(value._id) {
+        localStorage.setItem('collection', JSON.stringify(value));
+    }
+    return JSON.parse(localStorage.getItem('collection'));
+}
+
 const mapStateToProps = (state, ownProps) => {
-    console.log(ownProps)
     return {
-        collection: state.collections.selectedCollection,
+        collection: saveToStorage(state.collections.selectedCollection),
         books: state.books.books 
     };
 } 
