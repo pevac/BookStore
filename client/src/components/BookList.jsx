@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import ListGroup  from 'react-bootstrap/lib/ListGroup';
 import ListGroupItem  from 'react-bootstrap/lib/ListGroupItem';
+import Button  from 'react-bootstrap/lib/Button';
 import { Link } from 'react-router-dom';
 import * as actions from '../actions';
 
@@ -37,17 +38,17 @@ class BookList extends Component {
 
     render() {
         const list = this.props.books.map((item, index) => {
-            return <ListGroupItem key={item._id} className='list-group-item-action'>
+            return <ListGroupItem key={item._id} className='list-group-item-action clearfix'>
                     <p>Name: {item.name}</p>
                     <p>Author: {item.author}</p>
                     <p>Price: {item.price}</p>
                     <p>Rating: { item.rating }</p>
-                    <a  className='btn btn-primary btn-custom' onClick={() => false }>DELETE</a>
-                    <a  className='btn btn-primary btn-custom' onClick={() =>  false }>EDIT</a>
+                    <Button  className='btn btn-primary btn-custom' onClick={() => false }>DELETE</Button>
+                    <Button  className='btn btn-primary btn-custom' onClick={() =>  false }>EDIT</Button>
                 </ListGroupItem>
         })
         return <div>
-            <button  type="button" className="btn  board-add-card" onClick={() => false }>New</button>
+            <Button className="btn  board-add-card" onClick={() => false }>New</Button>
             <ListGroup>{list}</ListGroup>
         </div>;
     }

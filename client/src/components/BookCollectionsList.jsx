@@ -5,8 +5,31 @@ import { bindActionCreators } from 'redux'
 import { Link } from 'react-router-dom';
 import ListGroup  from 'react-bootstrap/lib/ListGroup';
 import ListGroupItem  from 'react-bootstrap/lib/ListGroupItem';
+import Button  from 'react-bootstrap/lib/Button';
+import  Modal  from 'react-modal';
 import * as actions from '../actions';
 import CollectionForm from './CollectionForm';
+
+const customModalStyles = {
+    content: {
+        width: '70%',
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)'
+    },
+    overlay: {
+        position: 'fixed',
+        top: 0,
+        left: '24%',
+        right: 0,
+        bottom: 0,
+        backgroundColor: 'rgba(255, 255, 255, 0.75)',
+        zIndex: 100,
+    },
+};
 
 class BookCollectionsList extends Component {
     static propTypes = {
@@ -38,22 +61,28 @@ class BookCollectionsList extends Component {
 
     render() {
         const list = this.props.collections.map((item, index) => {
-            return <ListGroupItem key={item._id} className='list-group-item-action'>
+            return <ListGroupItem key={item._id} className='list-group-item-action clearfix'>
                     <span>{item.name}</span>
-                    <a  className='btn btn-primary btn-custom' onClick={() => {this.props.deleteCollection(item._id)}}>DELETE</a>
-                    <a  className='btn btn-primary btn-custom' onClick={() => {this.props.openCollectionForm(item, true)}}>EDIT</a>
+                    <Button  className='btn btn-primary btn-custom' onClick={() => {this.props.deleteCollection(item._id)}}>DELETE</Button>
+                    <Button  className='btn btn-primary btn-custom' onClick={() => {this.props.openCollectionForm(item, true)}}>EDIT</Button>
                     <Link collection = {item} className='btn btn-primary btn-custom' to={ '/collections/books/' } onClick={() => {this.props.selectCollection(item)}}>Detail</Link>
                 </ListGroupItem>
         })
         return <div>
-            <button type="button" className="btn  board-add-card" onClick={() => this.props.openCollectionForm({name: '', description: ''}, true)}>New</button>
+            <Button type="button" className="btn  board-add-card" onClick={() => this.props.openCollectionForm({name: '', description: ''}, true)}>New</Button>
             <ListGroup>{list}</ListGroup>
-            <CollectionForm 
-                selectedCollection = {this.props.selectedCollection}
+            <Modal
+                id="test"
+                contentLabel="modalA"
+                style={customModalStyles}
                 isOpen={this.props.isOpenCollectionForm}
-                saveCollection={this.props.saveCollection}
-                closeForm={this.props.closeCollectionForm}>
-            </CollectionForm>
+                closeTimeoutMS={150}>
+                <CollectionForm 
+                    selectedCollection = {this.props.selectedCollection}
+                    saveCollection={this.props.saveCollection}
+                    closeForm={this.props.closeCollectionForm}>
+                </CollectionForm>
+            </Modal>
         </div>;
     }
 }

@@ -1,31 +1,32 @@
 import  React, { Component } from 'react';
+import { connect } from 'react-redux';
 import  Modal  from 'react-modal';
 import PropTypes from 'prop-types';
+import Button  from 'react-bootstrap/lib/Button';
+import Form  from 'react-bootstrap/lib/Form';
+import FormGroup  from 'react-bootstrap/lib/FormGroup';
+import Col  from 'react-bootstrap/lib/Col';
+import ControlLabel  from 'react-bootstrap/lib/ControlLabel';
+import FormControl  from 'react-bootstrap/lib/FormControl';
+import { Field, reduxForm } from 'redux-form'
 
-const customStyles = {
-    content: {
-        width: '70%',
-        top: '50%',
-        left: '50%',
-        right: 'auto',
-        bottom: 'auto',
-        marginRight: '-50%',
-        transform: 'translate(-50%, -50%)'
-    },
-    overlay: {
-        position: 'fixed',
-        top: 0,
-        left: '24%',
-        right: 0,
-        bottom: 0,
-        backgroundColor: 'rgba(255, 255, 255, 0.75)',
-        zIndex: 100,
-    },
-};
+const validate = values => {
+    const errors = {}
+    if (!values.name) {
+      errors.name = 'Required'
+    } else if (values.name.length > 40) {
+      errors.name = 'Must be 40 characters or less'
+    }
+
+    if (values.description && values.description.length > 300) {
+        errors.description = 'Must be 300 characters or less'
+    }
+    
+    return errors
+}
 
 class CollectionForm extends Component {
     static propTypes = {
-        isOpen: PropTypes.bool,
         openForm: PropTypes.func,
         selectedCollection: PropTypes.shape({
             description: PropTypes.string.isRequired,
@@ -35,18 +36,17 @@ class CollectionForm extends Component {
     }
     
     static defaultProps = {
-        isOpen: false,
         selectedCollection: {
             name: "",
             description: ""
         }
     }
+
     constructor(props) {
         super(props);
         this.state = {
             collection: this.props.selectedCollection
         };
-
         this.handleInputChange = this.handleInputChange.bind(this);
     }
 
@@ -65,35 +65,44 @@ class CollectionForm extends Component {
         });
     }
 
+    InputField = (props) => {
+        return (
+            <FormGroup className={props.meta.touched && props.meta.error ? 'has-error row' : 'row'}>
+                <Col htmlFor={props.uniqName} componentClass={ControlLabel} sm={2}>{props.label}</Col>
+                    <Col sm={10}>
+                        <FormControl {...props.input} id={props.uniqName} placeholder={props.label}
+                            componentClass= {props.componentClass}
+                            value={props.values}
+                            type={props.type} name={props.uniqName}>
+                        </FormControl>
+                        {props.meta.touched && ((props.meta.error && <span className='error-container'>{props.meta.error}</span>) || 
+                        (props.meta.warning && <span>{props.meta.warning}</span>))}
+                    </Col>
+            </FormGroup>)
+    }
+
     render() {
-        return <Modal
-                id="test"
-                contentLabel="modalA"
-                style={customStyles}
-                isOpen = { this.props.isOpen }
-                closeTimeoutMS={150}>
-                    <form>
-                        <div className="form-group row">
-                            <label htmlFor='name' className="col-sm-2 col-form-label">Title</label>
-                            <div className="col-sm-10">
-                                <input type="text" name="name" className="form-control" id="name" placeholder="Title"
-                                    value={this.state.collection.name}
-                                    onChange={this.handleInputChange}/>
-                            </div>
-                        </div>
-                        <div className="form-group row">
-                            <label htmlFor='description' className="col-sm-2 col-form-label">Description</label>
-                            <div className="col-sm-10">
-                                <textarea className="form-control" name="description" id="description" placeholder="Description"
-                                    value={this.state.collection.description}
-                                    onChange={this.handleInputChange}></textarea>
-                            </div>
-                        </div>
-                        <button type='button' onClick={() => {this.props.closeForm()}} className="btn btn-primary close-btn">Close</button>
-                        <button type='button' onClick={() => {this.props.saveCollection(this.state.collection)}} className="btn btn-primary save-btn">Save</button>
-                    </form>
-            </Modal>
+        
+        return <Form>
+                    <Field uniqName='name' label='Title' 
+                            type="text" name="name"
+                            values={this.state.collection.name}
+                            onChange={this.handleInputChange}
+                            component = {this.InputField}>
+                    </Field>
+                    <Field uniqName='description' label='Description' 
+                            type="text" name="description"
+                            componentClass= 'textarea'
+                            values={this.state.collection.description}
+                            onChange={this.handleInputChange}
+                            component = {this.InputField}>
+                    </Field>
+                    <FormGroup className='row'>
+                        <Button  onClick={() => {this.props.closeForm()}} className="btn btn-primary close-btn">Close</Button>
+                        <Button  onClick={() => {this.props.saveCollection(this.state.collection)}} className="btn btn-primary save-btn">Save</Button>
+                    </FormGroup>
+                </Form>
     }
 }
 
-export default CollectionForm;
+export default reduxForm({ form: 'collection', validate })(CollectionForm)

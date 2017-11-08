@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux'
+import { bindActionCreators } from 'redux';
+import ListGroup  from 'react-bootstrap/lib/ListGroup';
+import ListGroupItem  from 'react-bootstrap/lib/ListGroupItem';
+import Button  from 'react-bootstrap/lib/Button';
 import * as actions from '../actions';
 import {intersection} from 'underscore';
 
@@ -71,16 +74,16 @@ class BookCollection extends Component {
         });
 
         const books = collectionBooks.map((item, index) => {
-            return <li key={item._id} className='list-group-item list-group-item-action'>
+            return <ListGroupItem key={item._id} className='list-group-item-action clearfix'>
                     <p>Name: {item.name}</p>
                     <p>Author: {item.author}</p>
                     <p>Price: {item.price}</p>
                     <p>Rating: { item.rating }</p>
-                    <a  className='btn btn-primary btn-custom' 
+                    <Button className='btn-primary btn-custom' 
                         onClick={()=>{this.props.deleteBooksFromCollection(this.props.collection, item)}}>
                         DELETE
-                    </a>
-                </li>
+                    </Button>
+                </ListGroupItem>
         })
         let options = bookForAddToCollection.map((book, index) =>  {
              return  <option key={index} value={book._id}>{book.name}</option>
@@ -92,13 +95,13 @@ class BookCollection extends Component {
                 <option >{'none'}</option>
                 {options}
             </select>
-            <a disabled={!(this.state.addBookId && this.state.addBookId !='none')}  
+            <Button disabled={!(this.state.addBookId && this.state.addBookId !='none')}  
                 className='btn btn-primary btn-custom' 
                 onClick={()=>{this.props.addBookToCollection(this.props.collection._id, this.state.addBookId)}}>
                 ADD BOOK
-            </a>
+            </Button>
             <h4>Books</h4>
-            <ul className='list-group'>{books}</ul>
+            <ListGroup>{books}</ListGroup>
         </div>;
     }
 }

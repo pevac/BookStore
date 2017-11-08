@@ -26,8 +26,10 @@ export function* deleteSagaCollection(id) {
 export function* saveSagaCollection(collection) {
     try {
         let record = yield call(Api.saveRecord, Api.colletionsUrl, collection);
+        console.log(record);
         yield put(saveCollection.success(record));
     } catch(error) {
+        console.log(error);
         yield put(saveCollection.failure(error));
     }
 }

@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import { NavLink, Link } from 'react-router-dom';
 import Nav from 'react-bootstrap/lib/Nav';
 import Navbar from 'react-bootstrap/lib/Navbar';
 import NavItem  from 'react-bootstrap/lib/NavItem';
-import Clearfix  from 'react-bootstrap/lib/Clearfix';
-import { LinkContainer } from 'react-router-bootstrap';
+import { LinkContainer, IndexLinkContainer } from 'react-router-bootstrap';
 import styles from './NavMenu.css';
 
 export class NavMenu extends Component {
@@ -14,12 +12,11 @@ export class NavMenu extends Component {
                     <Navbar.Header>
                         <Navbar.Toggle />
                         <Navbar.Brand>
-                            <LinkContainer to="/home">
+                            <IndexLinkContainer to="/home">
                                 <Navbar.Link>Book Store</Navbar.Link>
-                            </LinkContainer>
+                            </IndexLinkContainer>
                         </Navbar.Brand>
                     </Navbar.Header>
-                    <Clearfix></Clearfix>
                     <Navbar.Collapse>
                         <Nav navbar>
                             <LinkContainer to="/collections" activeClassName='active'>
