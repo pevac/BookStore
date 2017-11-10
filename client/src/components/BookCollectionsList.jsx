@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import ListGroup  from 'react-bootstrap/lib/ListGroup';
 import ListGroupItem  from 'react-bootstrap/lib/ListGroupItem';
 import Button  from 'react-bootstrap/lib/Button';
+import { LinkContainer } from 'react-router-bootstrap';
 import  Modal  from 'react-modal';
 import * as actions from '../actions';
 import CollectionForm from './CollectionForm';
@@ -63,13 +64,15 @@ class BookCollectionsList extends Component {
         const list = this.props.collections.map((item, index) => {
             return <ListGroupItem key={item._id} className='list-group-item-action clearfix'>
                     <span>{item.name}</span>
-                    <Button  className='btn btn-primary btn-custom' onClick={() => {this.props.deleteCollection(item._id)}}>DELETE</Button>
-                    <Button  className='btn btn-primary btn-custom' onClick={() => {this.props.openCollectionForm(item, true)}}>EDIT</Button>
-                    <Link collection = {item} className='btn btn-primary btn-custom' to={ '/collections/books/' } onClick={() => {this.props.selectCollection(item)}}>Detail</Link>
+                    <Button bsStyle='primary'  className='btn-custom' onClick={() => {this.props.deleteCollection(item._id)}}>DELETE</Button>
+                    <Button bsStyle='primary'  className='btn-custom' onClick={() => {this.props.openCollectionForm(item, true)}}>EDIT</Button>
+                    <LinkContainer to={ '/collections/books/' } >
+                        <Button bsStyle='primary' className='btn-custom' onClick={() => {this.props.selectCollection(item)}}>Detail</Button>
+                    </LinkContainer>
                 </ListGroupItem>
         })
         return <div>
-            <Button type="button" className="btn  board-add-card" onClick={() => this.props.openCollectionForm({name: '', description: ''}, true)}>New</Button>
+            <Button bsStyle='primary' className="board-add-card" onClick={() => this.props.openCollectionForm({name: '', description: ''}, true)}>New</Button>
             <ListGroup>{list}</ListGroup>
             <Modal
                 id="test"

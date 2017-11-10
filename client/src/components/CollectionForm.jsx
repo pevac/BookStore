@@ -68,7 +68,7 @@ class CollectionForm extends Component {
     InputField = (props) => {
         return (
             <FormGroup className={props.meta.touched && props.meta.error ? 'has-error row' : 'row'}>
-                <Col htmlFor={props.uniqName} componentClass={ControlLabel} sm={2}>{props.label}</Col>
+                    <Col htmlFor={props.uniqName} componentClass={ControlLabel} sm={2}>{props.label}</Col>
                     <Col sm={10}>
                         <FormControl {...props.input} id={props.uniqName} placeholder={props.label}
                             componentClass= {props.componentClass}
@@ -76,7 +76,7 @@ class CollectionForm extends Component {
                             type={props.type} name={props.uniqName}>
                         </FormControl>
                         {props.meta.touched && ((props.meta.error && <span className='error-container'>{props.meta.error}</span>) || 
-                        (props.meta.warning && <span>{props.meta.warning}</span>))}
+                        (props.meta.warning && <span className='warning-container'>{props.meta.warning}</span>))}
                     </Col>
             </FormGroup>)
     }

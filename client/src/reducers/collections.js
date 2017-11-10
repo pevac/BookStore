@@ -11,7 +11,7 @@ const initialState = {
   }
 }
 
-export default function collectionsReducer(state = initialState, action) {  
+export default function collectionsReducer (state = initialState, action) {  
   switch(action.type) {
     case types.DELETE_BOOK_FROM_COLLECTION_SUCCESS:
       let selectedCollection = Object.assign({}, action.collection) ;
